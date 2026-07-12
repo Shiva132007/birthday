@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, My Love!</title>
+    <!-- Google Fonts: Elegant serif for headings and modern sans-serif for body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sacramento&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Starfield & Heart Canvas -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Side and Top Attractive Peeking Animations -->
+    <div class="peeking-character peeking-left">
+        <img src="assets/bubu_dudu.png" alt="Bubu Dudu Peeking Left">
+    </div>
+    
+    <div class="peeking-character peeking-right">
+        <img src="assets/bubu_dudu.png" alt="Bubu Dudu Peeking Right">
+    </div>
+
+    <div class="flying-doraemon">
+        <img src="assets/doraemon.png" alt="Flying Doraemon at Top">
+        <span class="copter-blade"></span>
+    </div>
+
+    <!-- Music Player Controller -->
+    <div id="audio-controller" class="hidden">
+        <button id="music-toggle" aria-label="Toggle Music">
+            <span class="disc-wrapper">
+                <svg class="disc-icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" fill="#2c2c2c" stroke="#ffd700" stroke-width="1.5"/>
+                    <circle cx="12" cy="12" r="4" fill="#ff7597"/>
+                    <circle cx="12" cy="12" r="1" fill="#fff"/>
+                </svg>
+            </span>
+        </button>
+        <span class="music-tooltip">Play/Pause Music</span>
+    </div>
+
+    <!-- STAGE 1: Landing Page -->
+    <div id="stage-landing" class="stage active">
+        <div class="landing-card card-box">
+            <div class="heart-pulse">❤️</div>
+            <h1 class="landing-title">Happy Birthday to the Most Special & Important Person in My Life</h1>
+            <p class="landing-subtitle">Today is all about celebrating you—the one who makes my world incredibly bright and beautiful.</p>
+            
+            <!-- Cute Bubu & Dudu Greeting -->
+            <div class="character-wrapper">
+                <img src="assets/bubu_dudu.png" alt="Bubu Dudu Cute" class="landing-character-img">
+            </div>
+            
+            <button id="start-wish-btn" class="glow-btn">Start the Wish ✨</button>
+        </div>
+    </div>
+
+    <!-- STAGE 2: Interactive Cake Page -->
+    <div id="stage-cake" class="stage hidden">
+        <div class="container">
+            <header class="section-header">
+                <h2 class="section-title">🎂 Make a Wish!</h2>
+                <p class="section-description">A beautiful year lies ahead. Click each candle to blow it out!</p>
+            </header>
+
+            <div class="cake-box card-box">
+                <!-- Interactive Cake -->
+                <div class="cake-container">
+                    <div class="cake">
+                        <div class="candle-container">
+                            <!-- Candle 1 -->
+                            <div class="candle" id="candle-1">
+                                <div class="flame"></div>
+                                <div class="wick"></div>
+                                <div class="candle-stick"></div>
+                            </div>
+                            <!-- Candle 2 -->
+                            <div class="candle" id="candle-2">
+                                <div class="flame"></div>
+                                <div class="wick"></div>
+                                <div class="candle-stick"></div>
+                            </div>
+                            <!-- Candle 3 -->
+                            <div class="candle" id="candle-3">
+                                <div class="flame"></div>
+                                <div class="wick"></div>
+                                <div class="candle-stick"></div>
+                            </div>
+                            <!-- Candle 4 -->
+                            <div class="candle" id="candle-4">
+                                <div class="flame"></div>
+                                <div class="wick"></div>
+                                <div class="candle-stick"></div>
+                            </div>
+                            <!-- Candle 5 -->
+                            <div class="candle" id="candle-5">
+                                <div class="flame"></div>
+                                <div class="wick"></div>
+                                <div class="candle-stick"></div>
+                            </div>
+                        </div>
+                        <div class="icing"></div>
+                        <div class="cake-top"></div>
+                        <div class="cake-body">
+                            <div class="cake-stripe"></div>
+                        </div>
+                        <div class="plate"></div>
+                    </div>
+                </div>
+
+                <!-- Doraemon Cheering -->
+                <div class="cake-interaction-area">
+                    <div class="doraemon-wrapper">
+                        <img src="assets/doraemon.png" alt="Doraemon Birthday" class="cake-character-img">
+                        <div class="doraemon-bubble">"Click on each candle to blow them out!"</div>
+                    </div>
+                </div>
+
+                <!-- Candle Messages (Fades in dynamically) -->
+                <div class="messages-container">
+                    <div id="candle-message-display" class="candle-msg">Blow out the candles one by one...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Birthday Wish Modal (Pops up when all candles are blown out) -->
+    <div id="wish-modal" class="modal hidden">
+        <div class="modal-content card-box">
+            <div class="modal-heart">💖</div>
+            <h2>Make a Wish, My Love!</h2>
+            <p id="wish-description">May your path always be lined with flowers, your days filled with laughter, and your heart secure in the warmth of our love. You deserve the absolute best today and every single day.</p>
+            <button id="modal-next-btn" class="glow-btn">Next: Read My Message ➡️</button>
+        </div>
+    </div>
+
+    <!-- STAGE 3: Birthday Quote Page -->
+    <div id="stage-quote" class="stage hidden">
+        <div class="container">
+            <header class="section-header">
+                <h1 class="sparkle-text">To My Everything</h1>
+            </header>
+
+            <!-- Photo alongside Quote -->
+            <div class="quote-container-layout">
+                <div class="polaroid-wrapper" style="flex-direction: column; align-items: center;">
+                    <div class="polaroid">
+                        <img src="assets/lovely_couple.png" alt="Lovely Couple Illustration">
+                        <div class="caption">Us ❤️</div>
+                    </div>
+                    <div class="princess-birthday-wish">Happy Birthday, Princess! 👑</div>
+                </div>
+
+                <div class="quote-box card-box">
+                    <p class="quote-text">
+                        "In all the universe, there is no heart for me like yours. In all the world, there is no love for you like mine. You are my peace in the chaos, my warmth in the cold, and the melody that plays in my heart. Happy Birthday to the one who makes my life complete."
+                    </p>
+                    <div class="quote-author">— Forever Yours</div>
+                </div>
+            </div>
+
+            <!-- Transition Button to stage 4 (Balloons) -->
+            <div class="navigation-area" style="margin-top: 2rem;">
+                <button id="go-to-balloons-btn" class="glow-btn">Open Your Gift 🎁</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- STAGE 4: Balloon Popping Memory Page (Balloons float up one by one) -->
+    <div id="stage-balloons" class="stage hidden">
+        <div class="container">
+            <header class="section-header">
+                <h2 class="section-title">🎈 Pop the Balloons!</h2>
+                <p class="section-description">There are 5 memories hidden inside these balloons. Click on each one to pop them and unlock your gifts!</p>
+            </header>
+
+            <!-- Floating Balloons Grid -->
+            <div class="balloons-wrapper">
+                <div class="balloon-item" id="balloon-1" data-index="1">
+                    <div class="balloon-body color-1">
+                        <span class="balloon-number">1</span>
+                    </div>
+                    <div class="balloon-knot"></div>
+                    <div class="balloon-string"></div>
+                </div>
+
+                <div class="balloon-item" id="balloon-2" data-index="2">
+                    <div class="balloon-body color-2">
+                        <span class="balloon-number">2</span>
+                    </div>
+                    <div class="balloon-knot"></div>
+                    <div class="balloon-string"></div>
+                </div>
+
+                <div class="balloon-item" id="balloon-3" data-index="3">
+                    <div class="balloon-body color-3">
+                        <span class="balloon-number">3</span>
+                    </div>
+                    <div class="balloon-knot"></div>
+                    <div class="balloon-string"></div>
+                </div>
+
+                <div class="balloon-item" id="balloon-4" data-index="4">
+                    <div class="balloon-body color-4">
+                        <span class="balloon-number">4</span>
+                    </div>
+                    <div class="balloon-knot"></div>
+                    <div class="balloon-string"></div>
+                </div>
+
+                <div class="balloon-item" id="balloon-5" data-index="5">
+                    <div class="balloon-body color-5">
+                        <span class="balloon-number">5</span>
+                    </div>
+                    <div class="balloon-knot"></div>
+                    <div class="balloon-string"></div>
+                </div>
+            </div>
+
+            <!-- Balloon POP Reveal Modal Overlay -->
+            <div id="memory-modal" class="modal hidden">
+                <div class="modal-content card-box memory-card">
+                    <div class="memory-polaroid">
+                        <img id="memory-photo" src="assets/lovely_couple.png" alt="Memory Photo">
+                        <div class="memory-caption" id="memory-caption">Your Childhood Beauty 🌸</div>
+                    </div>
+                    <p class="memory-description" id="memory-description">Memory description goes here...</p>
+                    <button id="close-memory-btn" class="glow-btn">Pop Next Balloon! 🎈</button>
+                </div>
+            </div>
+
+            <!-- Navigation Button to final stage (Shows up when all balloons are popped) -->
+            <div class="navigation-area hidden" id="balloons-done-nav" style="margin-top: 3rem;">
+                <button id="go-to-nicknames-btn" class="glow-btn">Next: The Final Surprise 💖</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- STAGE 5: Nicknames Dedication Page (Final Page) -->
+    <div id="stage-nicknames" class="stage hidden">
+        <div class="container">
+            <header class="section-header">
+                <h2 class="section-title">✨ My Playful Nicknames</h2>
+                <p class="section-description">A little message for the different sides of you that I adore!</p>
+            </header>
+
+            <div class="nicknames-grid">
+                <!-- Nickname 1: Nana -->
+                <div class="nickname-card card-box" id="nana-card">
+                    <div class="nickname-bubu-wrapper">
+                        <img src="assets/bubu_dudu.png" alt="Bubu Animation" class="animated-bubu-nana">
+                    </div>
+                    <h3>Happy Birthday, Nana! ❤️</h3>
+                    <p class="nickname-text">You are my sweetest dream come true. Every moment with you is a blessing.</p>
+                </div>
+
+                <!-- Nickname 2: Deyyam (Ghost) -->
+                <div class="nickname-card card-box" id="deyyam-card">
+                    <div class="nickname-ghost-wrapper">
+                        <!-- Cute Animated CSS Ghost -->
+                        <div class="cute-css-ghost">
+                            <div class="ghost-eyes">
+                                <div class="ghost-eye left"></div>
+                                <div class="ghost-eye right"></div>
+                            </div>
+                            <div class="ghost-mouth"></div>
+                            <div class="ghost-skirt">
+                                <span></span><span></span><span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <h3>Happy Birthday, Deyyam! 👻</h3>
+                    <p class="nickname-text">My favorite little ghost! You might tease me and scare me sometimes, but you've completely stolen my heart.</p>
+                </div>
+            </div>
+
+            <!-- Final Gift Celebration Reveal -->
+            <div id="final-gift-reveal" class="final-reveal-card card-box" style="margin-top: 4rem;">
+                <div class="final-heart-box">💝</div>
+                <h2>Happy Birthday, Nana!</h2>
+                <p>I hope these little surprises brought a smile to your face. You are my present peace and my forever love.</p>
+                
+                <!-- Cute Footer badges -->
+                <div class="cute-footer-badges" style="margin-top: 2rem;">
+                    <img src="assets/bubu_dudu.png" alt="Bubu Dudu Logo" class="mini-badge-img">
+                    <img src="assets/doraemon.png" alt="Doraemon Logo" class="mini-badge-img">
+                </div>
+
+                <footer class="quote-footer" style="margin-top: 2rem;">
+                    <p>With Love From... ❤️</p>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>
